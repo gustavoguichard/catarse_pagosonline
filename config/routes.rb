@@ -3,6 +3,7 @@ CatarsePagosonline::Engine.routes.draw do
     resources :pagosonline, only: [] do
       member do
         get :pay
+        get :review
         get :success
         get :error
       end
