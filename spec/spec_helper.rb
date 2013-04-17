@@ -65,7 +65,7 @@ def pagosonline_url(path, options = {})
   options[:https] = true if options[:https].nil?
   options[:country] ||= 'argentina'
   protocol = (options[:https] == true) ? 'https' : 'http'
-  "#{protocol}://#{options[:country]}.dineromail.com#{path}"
+  "#{protocol}://#{options[:country]}.pagosonline.com#{path}"
 end
 
 def stub_get(path, filename, options={})

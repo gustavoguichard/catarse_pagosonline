@@ -1,6 +1,6 @@
 CatarsePagosonline::Engine.routes.draw do
   namespace :payment do
-    resources :dineromail, only: [] do
+    resources :pagosonline, only: [] do
       member do
         get :pay
         get :success

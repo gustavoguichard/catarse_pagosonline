@@ -1,23 +1,15 @@
 GIT
-  remote: git://github.com/josemarluedke/dinero_mail_checkout.git
-  revision: ac19016a9956acf5c86a5e88e59cba977dc9c2bb
+  remote: git://github.com/sagmor/pagosonline.git
+  revision: 7eb2a3aeac6a7c86f205018c0c52b83c3c11267d
   specs:
-    dinero_mail_checkout (0.0.1)
-
-GIT
-  remote: git://github.com/josemarluedke/dinero_mail_ipn.git
-  revision: a5f107ac16abeb8bd0553c30c0c0c6ad598dc6f1
-  specs:
-    dinero_mail_ipn (1.0.2)
-      httparty (~> 0.6.1)
-      nokogiri (~> 1.4.3)
+    pagosonline (0.0.1)
+      hashie
 
 PATH
   remote: .
   specs:
-    catarse_dineromail (0.0.1)
-      dinero_mail_checkout
-      dinero_mail_ipn
+    catarse_pagosonline (0.1.10)
+      pagosonline
       rails (~> 3.2.6)
 
 GEM
@@ -52,7 +44,6 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     builder (3.0.0)
-    crack (0.1.8)
     database_cleaner (0.8.0)
     diff-lcs (1.1.3)
     erubis (2.7.0)
@@ -62,9 +53,8 @@ GEM
       factory_girl (~> 2.6.0)
       railties (>= 3.0.0)
     fakeweb (1.3.0)
+    hashie (2.0.3)
     hike (1.2.1)
-    httparty (0.6.1)
-      crack (= 0.1.8)
     i18n (0.6.0)
     journey (1.0.4)
     json (1.7.3)
@@ -72,9 +62,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.19)
+    mime-types (1.22)
     multi_json (1.3.6)
-    nokogiri (1.4.7)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -120,19 +109,18 @@ GEM
       tilt (~> 1.1, != 1.3.0)
     thor (0.15.4)
     tilt (1.3.3)
-    treetop (1.4.10)
+    treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    tzinfo (0.3.37)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  catarse_dineromail!
+  catarse_pagosonline!
   database_cleaner
-  dinero_mail_checkout!
-  dinero_mail_ipn!
   factory_girl_rails
   fakeweb
+  pagosonline!
   rspec-rails
