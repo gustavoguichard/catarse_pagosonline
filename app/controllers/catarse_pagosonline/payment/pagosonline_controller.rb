@@ -34,9 +34,9 @@ module CatarsePagosonline::Payment
 
         redirect_to @@gateway.redirect_url_for(response.token)
       rescue Exception => e
-        ::Airbrake.notify({ :error_class => "Paypal Error", :error_message => "Paypal Error: #{e.inspect}", :parameters => params}) rescue nil
+        ::Airbrake.notify({ :error_class => "PagosOnline Error", :error_message => "PagosOnline Error: #{e.inspect}", :parameters => params}) rescue nil
         Rails.logger.info "-----> #{e.inspect}"
-        paypal_flash_error
+        pagosonline_flash_error
         return redirect_to main_app.new_project_backer_path(backer.project)
       end
     end
@@ -61,6 +61,15 @@ module CatarsePagosonline::Payment
     end
 
     protected
+
+    def pagosonline_flash_error
+      flash[:failure] = t('pagosonline_error', scope: SCOPE)
+    end
+
+    def pagosonline_flash_success
+      flash[:success] = t('success', scope: SCOPE)
+    end
+
     def setup_gateway
       if ::Configuration[:pagosonline_username] and ::Configuration[:pagosonline_key] and ::Configuration[:pagosonline_merchant_id] and ::Configuration[:pagosonline_account_id]
         @@gateway ||= Pagosonline::Client.new({
