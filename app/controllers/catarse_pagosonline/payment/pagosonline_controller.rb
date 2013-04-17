@@ -10,35 +10,47 @@ module CatarsePagosonline::Payment
     layout :false
 
     def review
+      backer = current_user.backs.not_confirmed.find params[:id]
       # Just to render the review form
-      @form = @@gateway.form
+      response = @@gateway.payment({
+        reference: '...',
+        description: "#{backer.value} donation to #{backer.project.name}",
+        amount: backer.price_in_cents,
+        currency: 'COP',
+        response_url: payment_success_pagosonline_url(id: backer.id),
+        confirmation_url: payment_notifications_pagosonline_url(id: backer.id),
+        language: 'es'
+      })
+      @form = response.form do |f|
+        "<input type=\"submit\" value=\"Pagar\" />"
+      end
     end
 
     def pay
-      backer = current_user.backs.not_confirmed.find params[:id]
-      begin
-        response = @@gateway.payment({
-          reference: '...',
-          description: "#{backer.value} donation to #{backer.project.name}",
-          amount: backer.price_in_cents,
-          currency: 'COP',
-          response_url: payment_success_pagosonline_url(id: backer.id),
-          confirmation_url: payment_notifications_pagosonline_url(id: backer.id),
-          language: 'es'
-        })
+      # backer = current_user.backs.not_confirmed.find params[:id]
+      # begin
+      #   response = @@gateway.payment({
+      #     reference: '...',
+      #     description: "#{backer.value} donation to #{backer.project.name}",
+      #     amount: backer.price_in_cents,
+      #     currency: 'COP',
+      #     response_url: payment_success_pagosonline_url(id: backer.id),
+      #     confirmation_url: payment_notifications_pagosonline_url(id: backer.id),
+      #     language: 'es'
+      #   })
 
-        backer.update_attribute :payment_method, 'PagosOnline'
-        backer.update_attribute :payment_token, response.token
+      #   backer.update_attribute :payment_method, 'PagosOnline'
+      #   backer.update_attribute :payment_token, response.token
 
-        # build_notification(backer, response.params)
+      #   # build_notification(backer, response.params)
 
-        redirect_to @@gateway.redirect_url_for(response.token)
-      rescue Exception => e
-        ::Airbrake.notify({ :error_class => "PagosOnline Error", :error_message => "PagosOnline Error: #{e.inspect}", :parameters => params}) rescue nil
-        Rails.logger.info "-----> #{e.inspect}"
-        pagosonline_flash_error
-        return redirect_to main_app.new_project_backer_path(backer.project)
-      end
+      #   redirect_to @@gateway.redirect_url_for(response.token)
+      # rescue Exception => e
+      #   ::Airbrake.notify({ :error_class => "PagosOnline Error", :error_message => "PagosOnline Error: #{e.inspect}", :parameters => params}) rescue nil
+      #   Rails.logger.info "-----> #{e.inspect}"
+      #   pagosonline_flash_error
+      #   return redirect_to main_app.new_project_backer_path(backer.project)
+      # end
     end
 
     def success
@@ -76,7 +88,8 @@ module CatarsePagosonline::Payment
           merchant_id: ::Configuration[:pagosonline_merchant_id],
           account_id: ::Configuration[:pagosonline_account_id],
           login: ::Configuration[:pagosonline_username],
-          key: ::Configuration[:pagosonline_key]
+          key: ::Configuration[:pagosonline_key],
+          test: true
         })
       else
         raise "[PagosOnline] Merchant ID, Account ID, Login and KEY are required to make requests to PagosOnline"
