@@ -79,7 +79,7 @@ module CatarsePagosonline::Payment
           key: ::Configuration[:pagosonline_key]
         })
       else
-        puts "[PagosOnline] Merchant ID, Account ID, Login and KEY are required to make requests to PagosOnline"
+        raise "[PagosOnline] Merchant ID, Account ID, Login and KEY are required to make requests to PagosOnline"
       end
     end
 
