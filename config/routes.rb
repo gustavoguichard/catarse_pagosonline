@@ -1,16 +1,10 @@
 CatarsePagosonline::Engine.routes.draw do
   namespace :payment do
-    resources :pagosonline, only: [] do
-      member do
-        get :pay
-        get :review
-        get :success
-        get :error
-      end
-
-      collection do
-        post :notifications
-      end
-    end
+    get '/pagosonline/:id/review' => 'pagosonline#review', :as => 'review_pagosonline'
+    post '/pagosonline/notifications' => 'pagosonline#ipn',  :as => 'ipn_pagosonline'
+    match '/pagosonline/:id/notifications' => 'pagosonline#notifications',  :as => 'notifications_pagosonline'
+    match '/pagosonline/:id/pay'           => 'pagosonline#pay',            :as => 'pay_pagosonline'
+    match '/pagosonline/:id/success'       => 'pagosonline#success',        :as => 'success_pagosonline'
+    match '/pagosonline/:id/cancel'        => 'pagosonline#cancel',         :as => 'cancel_pagosonline'
   end
 end
