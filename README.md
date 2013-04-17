@@ -1,13 +1,13 @@
-# CatarseDineromail
+# CatarsePagosonline
 
-Dineromail integration with [Catarse](http://github.com/danielweinmann/catarse) crowdfunding platform
+Pagosonline integration with [Catarse](http://github.com/catarse/catarse) crowdfunding platform
 
 ## Installation
 
 Add this lines to your Catarse application's Gemfile:
 
-    gem 'dinero_mail_ipn', git: "git://github.com/josemarluedke/dinero_mail_ipn.git"
-    gem 'catarse_dineromail'
+    gem 'pagosonline', git: 'git://github.com/sagmor/pagosonline.git'
+    gem 'catarse_pagosonline'
 
 And then execute:
 
@@ -17,20 +17,20 @@ And then execute:
 
 Configure the routes for your Catarse application. Add the following lines in the routes file (config/routes.rb):
 
-    mount CatarseDineromail::Engine => "/", :as => "catarse_dineromail"
+    mount CatarsePagosonline::Engine => "/", :as => "catarse_pagosonline"
 
 ### Configurations
 
 Create this configurations into Catarse database:
 
-    dineromail_merchant, dineromail_ipn_password and dineromail_country_id
+    pagosonline_merchant, pagosonline_ipn_password and pagosonline_country_id
 
 In Rails console, run this:
 
-    Configuration.create!(name: "dineromail_merchant", value: "123456")
-    Configuration.create!(name: "dineromail_country_id", value: "2")
-    Configuration.create!(name: "dineromail_ipn_password", value: "ipn_password")
-    Configuration.create!(name: "dineromail_currency", value: "clp")
+    Configuration.create!(name: "pagosonline_merchant", value: "123456")
+    Configuration.create!(name: "pagosonline_country_id", value: "2")
+    Configuration.create!(name: "pagosonline_ipn_password", value: "ipn_password")
+    Configuration.create!(name: "pagosonline_currency", value: "clp")
 
   Currencies:
     "ars"
@@ -43,11 +43,11 @@ In Rails console, run this:
 
 Clone the repository:
 
-    $ git clone git://github.com/josemarluedke/catarse_dineromail.git
+    $ git clone git://github.com/gustavoguichard/catarse_pagosonline.git
 
 Add the catarse code into test/dummy:
 
-    $ git submodule add git://github.com/danielweinmann/catarse.git test/dummy
+    $ git submodule add git://github.com/catarse_pagosonline/catarse.git test/dummy
 
 Copy the Catarse's gems to Gemfile:
 
