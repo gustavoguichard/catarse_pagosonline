@@ -1,3 +1,4 @@
+# encoding: utf-8
 module CatarsePagosonline::Payment
   class PagosonlineController < ApplicationController
     skip_before_filter :verify_authenticity_token, :only => [:notifications]
@@ -70,9 +71,7 @@ module CatarsePagosonline::Payment
     protected
 
     def proccess!(backer, response)
-      notification = backer.payment_notifications.new({
-        extra_data = response.params
-      })
+      notification = backer.payment_notifications.new({extra_data = response.params})
 
       if response.success?
         backer.confirm!  
