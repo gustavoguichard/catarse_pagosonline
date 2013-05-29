@@ -71,7 +71,9 @@ module CatarsePagosonline::Payment
     protected
 
     def proccess!(backer, response)
-      notification = backer.payment_notifications.new({extra_data = response.params})
+      notification = backer.payment_notifications.new({
+        extra_data: response.params
+      })
 
       if response.success?
         backer.confirm!  
